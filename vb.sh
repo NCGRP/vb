@@ -2,11 +2,37 @@
 
 # Usage: see README.txt
 
-#define path to input resources
-fdb="/home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa"; #path to blast db for the fragmented reference genome
-qseq="/home/pat.reeves/patellifolia/seq/ORF803genomic.fa"; #path to fasta formatted query sequence
-rp="/home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos"; #path to directory containing hapx correspondence files (bwa mapped scos)
+#acquire command line variables to define path to input resources
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
 
+case $key in
+    -b)
+    fdb="$2" # path to blast db for the fragmented reference genome
+    shift # past argument
+    shift # past value
+    ;;
+    -q)
+    qseq="$2" # path to fasta formatted query sequence
+    shift # past argument
+    shift # past value
+    ;;
+    -c)
+    rp="$2" # path to directory containing hapx correspondence files (bwa mapped scos)
+    shift # past argument
+    shift # past value
+    ;;
+    *)    # unknown option
+    POSITIONAL+=("$1") # save it in an array for later
+    shift # past argument
+    ;;
+esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+### MAIN ###
 pd=$(pwd);
 
 #blast query
@@ -37,82 +63,20 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb.XXXXXX'); #make a directory to receive
         blk=$(echo "$blk" | sed "s/^$i /* $i /");
       fi;
     done;
-  echo;
-  echo "(*) sequences found, (X) not found"
+  echo "(*) sequences found, (X) not found";
+  echo "Sequences, alignments: $od";
   
-  #save blast results to file
+  #save modified blast results to file
   bo=$(echo "$od" | rev | cut -d'/' -f1 | rev)".txt"; #name of output file from name of output directory
   echo "$blk" > "$od"/"$bo";
   
-  echo "Blast results saved as $od/$bo";
+  echo "vb BLAST result: $od/$bo";
   echo;
 fi; 
+### END MAIN ###
 
 
 
 
-
-##acquire command line variables
-#POSITIONAL=()
-#while [[ $# -gt 0 ]]
-#do
-#key="$1"
-#
-#case $key in
-#    -b)
-#    bam="$2"
-#    shift # past argument
-#    shift # past value
-#    ;;
-#    -o)
-#    outfol="$2"
-#    shift # past argument
-#    shift # past value
-#    ;;
-#    -s)
-#    sites="$2"
-#    shift # past argument
-#    shift # past value
-#    ;;
-#    -F)
-#    stF="$2"
-#    shift # past argument
-#    shift # past value
-#    ;;
-#    -q)
-#    stq="$2"
-#    shift # past argument
-#    shift # past value
-#    ;;
-#    -ssh)
-#    ssh1="--sshloginfile $2"
-#    shift # past argument
-#    shift # past value
-#    ;;
-#    -u)
-#    useuserranges="YES"
-#    userrangefile="$2"
-#    shift # past argument
-#    shift # past value
-#    ;;
-#    -db)
-#    debug=YES
-#    shift # past argument
-#    ;;
-#    -ks)
-#    keepsingl=YES
-#    shift # past argument
-#    ;;
-#    -sp)
-#    suppar="--jobs 1";
-#    shift # past argument
-#    ;;
-#    *)    # unknown option
-#    POSITIONAL+=("$1") # save it in an array for later
-#    shift # past argument
-#    ;;
-#esac
-#done
-#set -- "${POSITIONAL[@]}" # restore positional parameters
 
 
