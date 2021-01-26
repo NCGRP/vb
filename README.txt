@@ -16,9 +16,11 @@ corresp = path to directory containing hapx correspondence files
 
 Notes:
 
-Examples: ./vb.sh -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
-                  -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
-                  -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
+Examples: 
+module load blast+/2.9.0;
+./vb.sh -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
+        -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
+        -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
                   
                   
                   
