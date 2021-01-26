@@ -1,35 +1,23 @@
-#starting 1/22/2021
-#development of vbquery.sh, a program to query flashed read archives for reads matching
-#a query from the focal crop genome using blastn
+#!/bin/bash
 
-#vb.sh (variant blast)
-#returns sequences and bam alignments between a reference genome and target genome
+# Usage: see README.txt
 
-#requirements:
-#1. a blastdb formatted fragmented reference genome (EL10)
-#2. alignments from hapx processing a flashed read archive (Patellifolia) against a reference genome (EL10)
-#3. a query sequence
+#define path to input resources
+fdb="/home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa"; #path to blast db for the fragmented reference genome
+qseq="/home/pat.reeves/patellifolia/seq/ORF803genomic.fa"; #path to fasta formatted query sequence
+rp="/home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos"; #path to directory containing hapx correspondence files (bwa mapped scos)
 
-
-
-#make blastdbs for fasta files of EL10 fragmented chromosomes, takes about 12 seconds total
-screen;
-sscavenger;
-module load blast+/2.9.0;
-cd /home/pat.reeves/patellifolia/EL10BlastDBs;
 pd=$(pwd);
-cat Chr[1-9]_Bvulgaris_548_EL10_1.0.fa > 1kb_Bvulgaris_548_EL10_1.0.fa; #make a single file containing all chromosomes' 1kb fragments
-makeblastdb -in "$pd"/1kb_Bvulgaris_548_EL10_1.0.fa -parse_seqids -dbtype nucl;
 
-#try some test queries, use html format to facilitate extracting the hits
-blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query /home/pat.reeves/patellifolia/seq/Hs1pro-1.fa); # -out 1.txt;
-blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query /home/pat.reeves/patellifolia/seq/ORF803genomic.fa); # -out 2.txt;
-blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query /home/pat.reeves/patellifolia/seq/ORF803mRNA.fa); # -out 3.txt;
-blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query <(echo "AAATTTCCCGGG")); # -out 4.txt; #this finds nothing
+#blast query
+blr=$(blastn -html -num_alignments 0 -db "$fdb" -query "$qseq");
+#blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query /home/pat.reeves/patellifolia/seq/ORF803genomic.fa); # -out 2.txt;
+#blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query <(echo "AAATTTCCCGGG")); # -out 4.txt; #this finds nothing
 
+#print query sequence name
+echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
 
-rp="/home/pat.reeves/patellifolia/OrthoVariant/blastnresultsflashedreads"; #root path to directory containing hapx processed flashed reads (bwa mapped scos)
-pd=$(pwd);
+#process blastn results
 if grep -q "No hits found" <(echo "$blr");
 then echo $'\n'"Query does not match reference genome. Quitting..."$'\n';
 
@@ -38,8 +26,8 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb.XXXXXX'); #make a directory to receive
   blk="$blr"; #transfer blast output to a variable that can be marked when reads are present in hapx archive
   for i in $a; 
     do c=$(echo "$i" | cut -d_ -f2); #name of contig or chromosome containing hit fragment
-      b=$(find "$rp"/"$c"hapxscossummary/"$c"scos535455Finalhapx/alignments -name "$i*.global.fa" -exec sh -c 'cp {} '"$od"'; echo {}' \;); #cp reads to $od, and echo to stdout to capture as $b
-      d=$(find "$rp"/"$c"hapxscossummary/"$c"scos535455Finalhapx/alignments -name "$i*_aligned_haps.bam*" -exec sh -c 'cp {} '"$od"'; echo {}' \;); #cp bam and bai file to $od
+      b=$(find "$rp" -name "$i*.global.fa" -exec sh -c 'cp {} '"$od"'; echo {}' \;); #cp reads to $od, and echo to stdout to capture as $b
+      d=$(find "$rp" -name "$i*_aligned_haps.bam*" -exec sh -c 'cp {} '"$od"'; echo {}' \;); #cp bam and bai file to $od
       
       #modify blast output to mark fragments with reads in the hapx archive
       if [[ "$b" == "" ]];
@@ -60,5 +48,71 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb.XXXXXX'); #make a directory to receive
   echo;
 fi; 
 
+
+
+
+
+##acquire command line variables
+#POSITIONAL=()
+#while [[ $# -gt 0 ]]
+#do
+#key="$1"
+#
+#case $key in
+#    -b)
+#    bam="$2"
+#    shift # past argument
+#    shift # past value
+#    ;;
+#    -o)
+#    outfol="$2"
+#    shift # past argument
+#    shift # past value
+#    ;;
+#    -s)
+#    sites="$2"
+#    shift # past argument
+#    shift # past value
+#    ;;
+#    -F)
+#    stF="$2"
+#    shift # past argument
+#    shift # past value
+#    ;;
+#    -q)
+#    stq="$2"
+#    shift # past argument
+#    shift # past value
+#    ;;
+#    -ssh)
+#    ssh1="--sshloginfile $2"
+#    shift # past argument
+#    shift # past value
+#    ;;
+#    -u)
+#    useuserranges="YES"
+#    userrangefile="$2"
+#    shift # past argument
+#    shift # past value
+#    ;;
+#    -db)
+#    debug=YES
+#    shift # past argument
+#    ;;
+#    -ks)
+#    keepsingl=YES
+#    shift # past argument
+#    ;;
+#    -sp)
+#    suppar="--jobs 1";
+#    shift # past argument
+#    ;;
+#    *)    # unknown option
+#    POSITIONAL+=("$1") # save it in an array for later
+#    shift # past argument
+#    ;;
+#esac
+#done
+#set -- "${POSITIONAL[@]}" # restore positional parameters
 
 
