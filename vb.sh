@@ -47,7 +47,7 @@ echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
 if grep -q "No hits found" <(echo "$blr");
 then echo $'\n'"Query does not match reference genome. Quitting..."$'\n';
 
-else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb.XXXXXX'); #make a directory to receive files found in flashed read archive
+else od=$(TMPDIR=$(pwd); mktemp -d -t 'vbo.XXXXXX'); #make a directory to receive files found in flashed read archive
   a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list of reference genome 1kb regions that are hits to the query sequence (assumes -html produces no extraneous " <a href=" tags
   blk="$blr"; #transfer blast output to a variable that can be marked when reads are present in hapx archive
   for i in $a; 
