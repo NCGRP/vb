@@ -22,21 +22,21 @@ Notes:
 Examples: 
 module load blast+/2.9.0;
 
-./vb.sh -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
-        -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
-        -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
+./vb.sh -hca -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
+             -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
+             -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
                   
-./vb.sh -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
-        -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
-        -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
+./vb.sh -hca -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
+             -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
+             -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
                   
-./vb.sh -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
-        -q /home/pat.reeves/patellifolia/seq/BvFl1mRNAspl4.fa \
-        -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
+./vb.sh -hca -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
+             -q /home/pat.reeves/patellifolia/seq/BvFl1mRNAspl4.fa \
+             -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
                  
-./vb.sh -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
-        -q /home/pat.reeves/patellifolia/seq/luciferase.fa \
-        -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
+./vb.sh -hca -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
+             -q /home/pat.reeves/patellifolia/seq/luciferase.fa \
+             -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
                  
 
 
@@ -60,9 +60,9 @@ Notes:
 Examples: 
 module load blast+/2.9.0;
 
-./vb.sh -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
-        -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
-        -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
+./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
+             -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
+             -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53fra.fa;
                   
 ./vb.sh -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
         -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \

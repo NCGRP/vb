@@ -3,8 +3,9 @@
 # Usage: see README.txt
 
 #establish default values
-hca=NO;
-fra=NO;
+hca="NO";
+fra="NO";
+mode="";
 
 #acquire command line variables to define path to input resources
 POSITIONAL=()
@@ -14,11 +15,13 @@ key="$1"
 
 case $key in
     -hca)
-    fhca=YES # path to blast db for the fragmented reference genome
+    hca="YES";
+    mode="hca";
     shift # past argument
     ;;
     -fra)
-    fdb=YES # path to blast db for the fragmented reference genome
+    fdb="YES";
+    mode="fra";
     shift # past argument
     ;;
     -b)
@@ -59,7 +62,7 @@ echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
 if grep -q "No hits found" <(echo "$blr");
 then echo $'\n'"Query does not match reference genome. Quitting..."$'\n';
 
-else od=$(TMPDIR=$(pwd); mktemp -d -t 'vbo.XXXXXX'); #make a directory to receive files found in archive
+else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory to receive files found in archive
   a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list of db regions that are hits to the query sequence (assumes -html produces no extraneous " <a href=" tags
   blk="$blr"; #transfer blast output to a variable that can be marked when reads are present in archive
 
