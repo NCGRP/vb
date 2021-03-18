@@ -54,14 +54,14 @@ then echo $'\n'"No mode selected. Choose -hca or -fra."$'\n';
 fi;
 
 #blast query
+echo "Executing blast query: blastn -html -num_alignments 0 -db $fdb -query $qseq";
 blr=$(blastn -html -num_alignments 0 -db "$fdb" -query "$qseq");
-#blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query /home/pat.reeves/patellifolia/seq/ORF803genomic.fa); # -out 2.txt;
-#blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query <(echo "AAATTTCCCGGG")); # -out 4.txt; #this finds nothing
 
 #print query sequence name
 echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
 
 #process blastn results
+echo "Processing...";
 if grep -q "No hits found" <(echo "$blr");
 then echo $'\n'"Query does not match reference genome. Quitting..."$'\n';
   exit 1;
@@ -96,6 +96,7 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory 
     (echo "$a" | head | parallel --bar 'grep -A1 ^\>{}$ '"$rp") > "$od"/"$fao";
   fi;
   
+
   #save modified blast results to file
   bo=$(echo "$od" | rev | cut -d'/' -f1 | rev)".txt"; #name of output file from name of output directory
   echo "$blk" > "$od"/"$bo";
