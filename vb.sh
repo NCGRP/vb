@@ -31,7 +31,8 @@ case $key in
     shift # past value
     ;;
     -c)
-    rp="$2" # path to directory containing hapx correspondence files (bwa mapped scos)
+    rp="$2" # path to directory containing hapx correspondence files (bwa mapped scos) (vb -hca)
+            # or path to fasta file containing reads (vb -fra)
     shift # past argument
     shift # past value
     ;;
@@ -48,7 +49,7 @@ pd=$(pwd);
 
 #verify user settings
 if [[ "$mode" == "" ]]; 
-then echo "No mode selected. Choose -hca or -fra.";
+then echo $'\n'"No mode selected. Choose -hca or -fra."$'\n';
   exit 1;
 fi;
 
@@ -63,16 +64,17 @@ echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
 #process blastn results
 if grep -q "No hits found" <(echo "$blr");
 then echo $'\n'"Query does not match reference genome. Quitting..."$'\n';
-
+  exit 1;
 else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory to receive files found in archive
   a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list of db regions that are hits to the query sequence (assumes -html produces no extraneous " <a href=" tags
   blk="$blr"; #transfer blast output to a variable that can be marked when reads are present in archive
 
+
+  ### hca mode ###
   if [[ "$mode" == "hca" ]];
   then
     for i in $a; 
-      do c=$(echo "$i" | cut -d_ -f2); #name of contig or chromosome containing hit fragment
-        b=$(find "$rp" -name "$i*.global.fa" -exec sh -c 'cp {} '"$od"'; echo {}' \;); #cp reads to $od, and echo to stdout to capture as $b
+      do b=$(find "$rp" -name "$i*.global.fa" -exec sh -c 'cp {} '"$od"'; echo {}' \;); #cp reads to $od, and echo to stdout to capture as $b
         d=$(find "$rp" -name "$i*_aligned_haps.bam*" -exec sh -c 'cp {} '"$od"'; echo {}' \;); #cp bam and bai file to $od
         
         #modify blast output to mark fragments with reads in the hapx archive
@@ -85,15 +87,20 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory 
       done;
     echo "(*) sequences found, (X) not found";
     echo "Sequences, alignments: $od";
-    
-    #save modified blast results to file
-    bo=$(echo "$od" | rev | cut -d'/' -f1 | rev)".txt"; #name of output file from name of output directory
-    echo "$blk" > "$od"/"$bo";
   
+
+  ### fra mode ###
   elif [[ "$mode" == "fra" ]];
-  then echo "$mode";
+  then
+    fao=$(echo "$od" | rev | cut -d'/' -f1 | rev)".fa"; #name of output file from name of output directory
+    (echo "$a" | head | parallel --bar 'grep -A1 ^\>{}$ '"$rp") > "$od"/"$fao";
   fi;
   
+  #save modified blast results to file
+  bo=$(echo "$od" | rev | cut -d'/' -f1 | rev)".txt"; #name of output file from name of output directory
+  echo "$blk" > "$od"/"$bo";
+
+  #parting words
   echo "vb BLAST result: $od/$bo";
   echo;
 fi; 
