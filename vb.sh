@@ -3,8 +3,6 @@
 # Usage: see README.txt
 
 #establish default values
-hca="NO";
-fra="NO";
 mode="";
 
 #acquire command line variables to define path to input resources
@@ -48,6 +46,12 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 ### MAIN ###
 pd=$(pwd);
 
+#verify user settings
+if [[ "$mode" == "" ]]; 
+then echo "No mode selected. Choose -hca or -fra.";
+  exit 1;
+fi;
+
 #blast query
 blr=$(blastn -html -num_alignments 0 -db "$fdb" -query "$qseq");
 #blr=$(blastn -html -num_alignments 0 -db 1kb_Bvulgaris_548_EL10_1.0.fa -query /home/pat.reeves/patellifolia/seq/ORF803genomic.fa); # -out 2.txt;
@@ -88,9 +92,6 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory 
   
   elif [[ "$mode" == "fra" ]];
   then echo "$mode";
-  
-  else
-    echo "No mode selected. Choose -hca or -fra.";
   fi;
   
   echo "vb BLAST result: $od/$bo";
