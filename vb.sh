@@ -15,12 +15,10 @@ key="$1"
 
 case $key in
     -hca)
-    hca="YES";
     mode="hca";
     shift # past argument
     ;;
     -fra)
-    fdb="YES";
     mode="fra";
     shift # past argument
     ;;
@@ -66,7 +64,7 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory 
   a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list of db regions that are hits to the query sequence (assumes -html produces no extraneous " <a href=" tags
   blk="$blr"; #transfer blast output to a variable that can be marked when reads are present in archive
 
-  if [[ "$hca" == "YES" ]];
+  if [[ "$mode" == "hca" ]];
   then
     for i in $a; 
       do c=$(echo "$i" | cut -d_ -f2); #name of contig or chromosome containing hit fragment
@@ -88,8 +86,8 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory 
     bo=$(echo "$od" | rev | cut -d'/' -f1 | rev)".txt"; #name of output file from name of output directory
     echo "$blk" > "$od"/"$bo";
   
-  elif [[ "$fra" == "YES" ]];
-  then
+  elif [[ "$mode" == "fra" ]];
+  then echo "$mode";
   
   else
     echo "No mode selected. Choose -hca or -fra.";
