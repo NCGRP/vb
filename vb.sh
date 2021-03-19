@@ -4,6 +4,8 @@
 
 #establish default values
 mode="";
+od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a default directory name to receive files found in archive
+  
 
 #acquire command line variables to define path to input resources
 POSITIONAL=()
@@ -36,6 +38,11 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    -o)
+    od="$2" # path to output folder
+    shift # past argument
+    shift # past value
+    ;;
     *)    # unknown option
     POSITIONAL+=("$1") # save it in an array for later
     shift # past argument
@@ -55,7 +62,8 @@ fi;
 
 #blast query
 echo "Executing blast query: blastn -html -num_alignments 0 -db $fdb -query $qseq";
-blr=$(blastn -html -num_alignments 0 -db "$fdb" -query "$qseq");
+nt=$(nproc); #get number of cpus available
+blr=$(blastn -html -num_threads "$nproc" -num_alignments 0 -db "$fdb" -query "$qseq");
 
 #print query sequence name
 echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
@@ -63,10 +71,9 @@ echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
 #process blastn results
 echo "Processing...";
 if grep -q "No hits found" <(echo "$blr");
-then echo $'\n'"Query does not match reference genome. Quitting..."$'\n';
+then echo $'\n'"Query does not match target database. Quitting..."$'\n';
   exit 1;
-else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory to receive files found in archive
-  a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list of db regions that are hits to the query sequence (assumes -html produces no extraneous " <a href=" tags
+else a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list of db regions that are hits to the query sequence (assumes -html produces no extraneous " <a href=" tags
   blk="$blr"; #transfer blast output to a variable that can be marked when reads are present in archive
 
 

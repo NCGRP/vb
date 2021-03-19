@@ -12,11 +12,12 @@ Resources:
 2) A query sequence in fasta format
 3) A set of correspondence files generated using hapx
 
-Usage: ./vb.sh -hca -b blastdb -q queryseq -c corresp
+Usage: ./vb.sh -hca -b blastdb -q queryseq -c corresp [-o outfol]
 where,
 blastdb = path to blast db for the fragmented reference genome
 queryseq = path to fasta formatted query sequence
 corresp = path to directory containing hapx correspondence files
+outfol = path to output folder
 
 Notes:
 
@@ -50,11 +51,12 @@ Resources:
 Requirements (in path):
 1) blastn (part of BLAST+ package)
 
-Usage: ./vb.sh -fra -b blastdb -q queryseq -c fasta
+Usage: ./vb.sh -fra -b blastdb -q queryseq -c fasta [-o outfol]
 where,
 blastdb = path to blast db from the flashed read archive
 queryseq = path to fasta formatted query sequence
 fasta = path to sorted fasta file from the flashed read archive
+outfol = path to output folder
 
 Notes:
 
@@ -63,11 +65,13 @@ module load blast+/2.9.0;
 
 ./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
              -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
-             -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa;
+             -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa \
+             -o /home/pat.reeves/vb/vbo.53xORF803;
                   
 ./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
              -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
              -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa;
+             -o /home/pat.reeves/vb/vbo.53xBvFl1genomic;
                   
 ./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
              -q /home/pat.reeves/patellifolia/seq/BvFl1mRNAspl4.fa \
