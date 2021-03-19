@@ -63,7 +63,7 @@ fi;
 #blast query
 echo "Executing blast query: blastn -html -num_alignments 0 -db $fdb -query $qseq";
 nt=$(nproc); #get number of cpus available
-blr=$(blastn -html -num_threads "$nproc" -num_alignments 0 -db "$fdb" -query "$qseq");
+blr=$(blastn -html -num_threads "$nt" -num_alignments 0 -db "$fdb" -query "$qseq");
 
 #print query sequence name
 echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
