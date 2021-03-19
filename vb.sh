@@ -104,7 +104,7 @@ else a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list o
   elif [[ "$mode" == "fra" ]];
   then
     fao=$(echo "$od" | rev | cut -d'/' -f1 | rev)".fa"; #name of output file from name of output directory
-    (echo "$a" | parallel --bar 'grep -A1 ^\>{}$ '"$rp") > "$od"/"$fao";
+    #(echo "$a" | parallel --bar 'grep -A1 ^\>{}$ '"$rp") > "$od"/"$fao"; #grep version, sgrep much faster
     (echo "$a" | parallel --bar 'sgrep \>{} '"$rp"' | tr " " "\n"') > "$od"/"$fao";
   fi;
   

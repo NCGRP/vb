@@ -68,10 +68,19 @@ module load blast+/2.9.0;
              -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa \
              -o /home/pat.reeves/vb/vbo.53xORF803;
                   
-./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
-             -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
-             -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa;
-             -o /home/pat.reeves/vb/vbo.53xBvFl1genomic;
+for i in 53 54 55;
+  do ./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/"$i"blastdb/"$i"fra.fa \
+                  -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
+                  -c /home/pat.reeves/patellifolia/flashedreadarchive/"$i"fraFinal/"$i"frasorted.fa;
+                  -o /home/pat.reeves/vb/vbo."$i"xBvFl1genomic;
+  done;
+  
+time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
+                  -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
+                  -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa;
+                  -o /home/pat.reeves/vb/vbfrao.{}xBvFl1genomic;'
+                  
+                  
                   
 ./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
              -q /home/pat.reeves/patellifolia/seq/BvFl1mRNAspl4.fa \
