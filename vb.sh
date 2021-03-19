@@ -4,7 +4,7 @@
 
 #establish default values
 mode="";
-od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a default directory name to receive files found in archive
+od="";
   
 
 #acquire command line variables to define path to input resources
@@ -40,6 +40,7 @@ case $key in
     ;;
     -o)
     od="$2" # path to output folder
+    mkdir "$od";
     shift # past argument
     shift # past value
     ;;
@@ -58,6 +59,9 @@ pd=$(pwd);
 if [[ "$mode" == "" ]]; 
 then echo $'\n'"No mode selected. Choose -hca or -fra."$'\n';
   exit 1;
+fi;
+if [[ "$od" == "" ]];
+  then od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a default directory name to receive files found in archive
 fi;
 
 #blast query
