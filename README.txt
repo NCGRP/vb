@@ -77,7 +77,7 @@ for i in 53 54 55;
   
 time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
                   -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
-                  -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa;
+                  -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
                   -o /home/pat.reeves/vb/vbfrao.{}xBvFl1genomic;'
                   
                   
