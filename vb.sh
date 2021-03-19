@@ -94,6 +94,7 @@ else od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a directory 
   then
     fao=$(echo "$od" | rev | cut -d'/' -f1 | rev)".fa"; #name of output file from name of output directory
     (echo "$a" | parallel --bar 'grep -A1 ^\>{}$ '"$rp") > "$od"/"$fao";
+    (echo "$a" | parallel --bar 'sgrep \>{} '"$rp"' | tr " " "\n"') > "$od"/"$fao";
   fi;
   
 
