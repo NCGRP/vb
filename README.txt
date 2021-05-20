@@ -67,7 +67,19 @@ module load blast+/2.9.0;
              -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
              -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa \
              -o /home/pat.reeves/vb/vbo.53xORF803;
-                  
+
+sbrief;
+module load blast+/2.9.0;
+cd vb;
+./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
+             -q /home/pat.reeves/patellifolia/seq/XM_010669575.fa \
+             -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa \
+             -o /home/pat.reeves/vb/vbo.XM_010669575;
+
+XM_010669575.fa
+
+
+                 
   
 time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
                   -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
