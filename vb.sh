@@ -65,8 +65,8 @@ if [[ "$od" == "" ]];
 fi;
 
 #blast query
-echo "Executing blast query: blastn -html -num_threads "$nt" -num_descriptions 10000 -num_alignments 0 -db "$fdb" -query "$qseq"";
 nt=$(nproc); #get number of cpus available
+echo "Executing blast query: blastn -html -num_threads "$nt" -num_descriptions 10000 -num_alignments 0 -db "$fdb" -query "$qseq"";
 blr=$(blastn -html -num_threads "$nt" -num_descriptions 10000 -num_alignments 0 -db "$fdb" -query "$qseq");
 
 #print query sequence name

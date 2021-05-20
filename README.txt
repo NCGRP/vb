@@ -46,7 +46,7 @@ vb -fra
 Resources:
 1) The blast database from a flashed read archive
 2) A query sequence in fasta format
-3) The fasta file from a flashed read archive
+3) The sorted fasta file from a flashed read archive (one line per sequence)
 
 Requirements (in path):
 1) blastn (part of BLAST+ package)
@@ -68,18 +68,32 @@ module load blast+/2.9.0;
              -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa \
              -o /home/pat.reeves/vb/vbo.53xORF803;
                   
-for i in 53 54 55;
-  do ./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/"$i"blastdb/"$i"fra.fa \
-                  -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
-                  -c /home/pat.reeves/patellifolia/flashedreadarchive/"$i"fraFinal/"$i"frasorted.fa;
-                  -o /home/pat.reeves/vb/vbo."$i"xBvFl1genomic;
-  done;
   
+time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
+                  -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
+                  -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
+                  -o /home/pat.reeves/vb/vbfrao.{}xORF803genomic;'
+
 time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
                   -q /home/pat.reeves/patellifolia/seq/BvFl1genomic.fa \
                   -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
                   -o /home/pat.reeves/vb/vbfrao.{}xBvFl1genomic;'
                   
+time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
+                  -q /home/pat.reeves/patellifolia/seq/Hs1pro-1.fa \
+                  -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
+                  -o /home/pat.reeves/vb/vbfrao.{}xHs1pro1;'
+                 
+time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
+                  -q /home/pat.reeves/patellifolia/seq/BvFl1mRNAspl4.fa \
+                  -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
+                  -o /home/pat.reeves/vb/vbfrao.{}xBvFl1mRNAspl4;'
+ 
+time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
+                  -q /home/pat.reeves/patellifolia/seq/luciferase.fa \
+                  -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
+                  -o /home/pat.reeves/vb/vbfrao.{}xluciferase;'
+ 
                   
                   
 ./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
