@@ -8,7 +8,7 @@ Requirements (in path):
 1) blastn (part of BLAST+ package)
 2) sgrep
 
-' '  
+#  
 vb -hca
 
 Resources:
