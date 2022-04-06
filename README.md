@@ -8,7 +8,7 @@ Requirements (in path):
 1) blastn (part of BLAST+ package)
 2) sgrep
 
-
+' '  
 vb -hca
 
 Resources:
@@ -49,7 +49,6 @@ Examples:
     ./vb.sh -hca -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
              -q /home/pat.reeves/patellifolia/seq/luciferase.fa \
              -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
-
 
 
 vb -fra
