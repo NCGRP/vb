@@ -24,7 +24,7 @@ Notes:
 Examples: 
 module load blast+/2.9.0;
 
-./vb.sh -hca -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
+    ./vb.sh -hca -b /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa \
              -q /home/pat.reeves/patellifolia/seq/ORF803genomic.fa \
              -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
                   
