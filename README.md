@@ -1,5 +1,7 @@
 vb (variant blast)
+
 vb -hca interrogates hapx correspondence archives for orthologous sequence variation
+
 vb -fra interrogates flashed read archives for homologous sequence variation
 
 Requirements (in path):
@@ -7,16 +9,22 @@ Requirements (in path):
 2) sgrep
 
 vb -hca
+
 Resources:
 1) A blast database for a fragmented reference genome
 2) A query sequence in fasta format
 3) A set of correspondence files generated using hapx
 
 Usage: ./vb.sh -hca -b blastdb -q queryseq -c corresp [-o outfol]
+
 where,
+
 blastdb = path to blast db for the fragmented reference genome
+
 queryseq = path to fasta formatted query sequence
+
 corresp = path to directory containing hapx correspondence files
+
 outfol = path to output folder
 
 Notes:
@@ -44,6 +52,7 @@ Examples:
 
 
 vb -fra
+
 Resources:
 1) The blast database from a flashed read archive
 2) A query sequence in fasta format
@@ -53,10 +62,15 @@ Requirements (in path):
 1) blastn (part of BLAST+ package)
 
 Usage: ./vb.sh -fra -b blastdb -q queryseq -c fasta [-o outfol]
+
 where,
+
 blastdb = path to blast db from the flashed read archive
+
 queryseq = path to fasta formatted query sequence
+
 fasta = path to sorted fasta file from the flashed read archive
+
 outfol = path to output folder
 
 Notes:
