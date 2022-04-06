@@ -71,12 +71,12 @@ module load blast+/2.9.0;
 sbrief;
 module load blast+/2.9.0;
 cd vb;
-./vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa \
+time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
              -q /home/pat.reeves/patellifolia/seq/XM_010669575.fa \
-             -c /home/pat.reeves/patellifolia/flashedreadarchive/53fraFinal/53frasorted.fa \
-             -o /home/pat.reeves/vb/vbo.XM_010669575;
+             -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
+             -o /home/pat.reeves/vb/{}vbfrao.XM_010669575;'
 
-XM_010669575.fa
+
 
 
                  
@@ -91,6 +91,11 @@ time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flash
                   -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
                   -o /home/pat.reeves/vb/vbfrao.{}xBvFl1genomic;'
                   
+
+#Hs1pro1, contrast EL10 vs FRA blast
+blastn -db /home/pat.reeves/patellifolia/EL10BlastDBs/1kb_Bvulgaris_548_EL10_1.0.fa -query /home/pat.reeves/patellifolia/seq/Hs1pro-1.fa -out hs1pro1.EL10.out.txt
+blastn -db /home/pat.reeves/patellifolia/flashedreadarchive/53blastdb/53fra.fa -query /home/pat.reeves/patellifolia/seq/Hs1pro-1.fa -out hs1pro1.53.out.txt
+
 time seq 53 1 55 | parallel './vb.sh -fra -b /home/pat.reeves/patellifolia/flashedreadarchive/{}blastdb/{}fra.fa \
                   -q /home/pat.reeves/patellifolia/seq/Hs1pro-1.fa \
                   -c /home/pat.reeves/patellifolia/flashedreadarchive/{}fraFinal/{}frasorted.fa \
