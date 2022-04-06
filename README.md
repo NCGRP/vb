@@ -50,7 +50,7 @@ Examples:
              -q /home/pat.reeves/patellifolia/seq/luciferase.fa \
              -c /home/pat.reeves/patellifolia/hapxCorrespondenceFiles/EL10XPatellifolia535455scos;
 
-
+#  
 vb -fra
 
 Resources:
