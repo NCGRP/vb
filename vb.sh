@@ -80,6 +80,9 @@ then echo $'\n'"Query does not match target database. Quitting..."$'\n';
 else a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list of db regions that are hits to the query sequence (assumes -html produces no extraneous " <a href=" tags
   blk="$blr"; #transfer blast output to a variable that can be marked when reads are present in archive
 
+  #save modified blast results to file
+  bo=$(echo "$od" | rev | cut -d'/' -f1 | rev)".txt"; #name of output file from name of output directory
+  echo "$blk" > "$od"/"$bo";
 
   ### hca mode ###
   if [[ "$mode" == "hca" ]];
@@ -112,15 +115,11 @@ else a=$(echo "$blr" | grep " <a href=" | awk -F' ' '{print $1}'); #get a list o
       echo "-c flag omitted or blank, no extraction of fasta files will be performed.";
     fi;
   fi;
-  
-
-  #save modified blast results to file
-  bo=$(echo "$od" | rev | cut -d'/' -f1 | rev)".txt"; #name of output file from name of output directory
-  echo "$blk" > "$od"/"$bo";
 
   #parting words
   echo "vb BLAST result: $od/$bo";
   echo;
+
 fi; 
 ### END MAIN ###
 
