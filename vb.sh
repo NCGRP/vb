@@ -74,10 +74,10 @@ if [[ "$od" == "" ]];
   then od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a default directory name to receive files found in archive
 fi;
 if [[ "$nd" == "" ]];
-  then nd=10000); #make a default directory name to receive files found in archive
+  then nd=10000; #make a default directory name to receive files found in archive
 fi;
 if [[ "$na" == "" ]];
-  then na=0); #make a default directory name to receive files found in archive
+  then na=0; #make a default directory name to receive files found in archive
 fi;
 
 
