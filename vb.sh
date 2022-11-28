@@ -73,11 +73,18 @@ fi;
 if [[ "$od" == "" ]];
   then od=$(TMPDIR=$(pwd); mktemp -d -t 'vb'"$mode"'o.XXXXXX'); #make a default directory name to receive files found in archive
 fi;
+if [[ "$nd" == "" ]];
+  then nd=10000); #make a default directory name to receive files found in archive
+fi;
+if [[ "$na" == "" ]];
+  then na=0); #make a default directory name to receive files found in archive
+fi;
+
 
 #blast query
 nt=$(nproc); #get number of cpus available
-echo "Executing blast query: blastn -html -num_threads "$nt" -num_descriptions 10000 -num_alignments 0 -db "$fdb" -query "$qseq"";
-blr=$(blastn -html -num_threads "$nt" -num_descriptions 10000 -num_alignments 0 -db "$fdb" -query "$qseq");
+echo "Executing blast query: blastn -html -num_threads "$nt" -num_descriptions "$nd" -num_alignments "$na" -db "$fdb" -query "$qseq"";
+blr=$(blastn -html -num_threads "$nt" -num_descriptions "$nd" -num_alignments "$na" -db "$fdb" -query "$qseq");
 
 #print query sequence name
 echo "$blr" | grep '<b>Query=</b> ' | sed 's:<b>::' | sed 's:</b>::';
