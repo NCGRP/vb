@@ -16,7 +16,7 @@ Resources:
 2) A query sequence in fasta format
 3) A set of correspondence files generated using hapx
 
-Usage: ./vb.sh -hca -b blastdb -q queryseq -c corresp [-o outfol]
+Usage: ./vb.sh -hca -b blastdb -q queryseq -c corresp [-d num_descriptions] [-a num_alignments] [-o outfol]
 
 where,
 
@@ -25,6 +25,10 @@ blastdb = path to blast db for the fragmented reference genome
 queryseq = path to fasta formatted query sequence
 
 corresp = path to directory containing hapx correspondence files
+
+num_descriptions = maximum number of blast hits to return (default 10000)
+
+num_alignments = number of alignments to return (default 0)
 
 outfol = path to output folder
 
@@ -61,7 +65,7 @@ Resources:
 Requirements (in path):
 1) blastn (part of BLAST+ package)
 
-Usage: ./vb.sh -fra -b blastdb -q queryseq -c fasta [-o outfol]
+Usage: ./vb.sh -fra -b blastdb -q queryseq [-c fasta] [-d num_descriptions] [-a num_alignments] [-o outfol]
 
 where,
 
@@ -70,6 +74,10 @@ blastdb = path to blast db from the flashed read archive
 queryseq = path to fasta formatted query sequence
 
 fasta = path to sorted fasta file from the flashed read archive
+
+num_descriptions = maximum number of blast hits to return (default 10000)
+
+num_alignments = number of alignments to return (default 0)
 
 outfol = path to output folder
 

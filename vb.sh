@@ -38,6 +38,16 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    -d)
+    nd="$2" # maximum number of descriptions to be returned by blast (default 10000)
+    shift # past argument
+    shift # past value
+    ;;
+    -a)
+    na="$2" # number of alignments to be returned by blast (default 0)
+    shift # past argument
+    shift # past value
+    ;;
     -o)
     od="$2" # path to output folder
     mkdir "$od";
