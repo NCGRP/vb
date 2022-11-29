@@ -82,7 +82,7 @@ fi;
 
 
 #blast query
-nt=$(nproc); #get number of cpus available
+nt=4; #number of cpus, to use all use nt=$(nproc);
 echo "Executing blast query: blastn -html -num_threads "$nt" -num_descriptions "$nd" -num_alignments "$na" -db "$fdb" -query "$qseq"";
 blr=$(blastn -html -num_threads "$nt" -num_descriptions "$nd" -num_alignments "$na" -db "$fdb" -query "$qseq");
 
